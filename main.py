@@ -29,10 +29,12 @@ def root():
 def upload():
     upload = request.files.get('file')
     print(upload.filename)
-    client_ip = request.environ.get('HTTP_X_FORWARDED_FOR') or request.environ.get('REMOTE_ADDR')
-    print(f'request is coming from ip {client_ip}')
+
+    # client_ip = request.environ.get('HTTP_X_FORWARDED_FOR') or request.environ.get('REMOTE_ADDR')
+    # print(f'request is coming from ip {client_ip}')
+
     name, ext = os.path.splitext(upload.filename)
-    if ext not in ('.png', '.tar.gz', '.jpeg', '.jpg'):
+    if ext not in {'.png', '.tar.gz', '.jpeg'}:
         return 'File extension not allowed.'
     
     # appends upload.filename automatically
