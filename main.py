@@ -1,10 +1,9 @@
 from bottle import route, run, hook, response, request
 import json
-import os
+import os, pathlib
 
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-results_mnt_path = '/'.join((ROOT_DIR, 'results')
 
 
 @hook('after_request')
@@ -27,19 +26,38 @@ def root():
 
 @route('/api', method='POST')
 def upload():
+    # get all file keys
+    # request.files.keys()
+
     upload = request.files.get('file')
     print(upload.filename)
 
-    # client_ip = request.environ.get('HTTP_X_FORWARDED_FOR') or request.environ.get('REMOTE_ADDR')
-    # print(f'request is coming from ip {client_ip}')
+    client_ip = request.environ.get('HTTP_X_FORWARDED_FOR') \
+        or request.environ.get('REMOTE_ADDR')
+    print(f'request is coming from ip {client_ip}')
 
     name, ext = os.path.splitext(upload.filename)
-    if ext not in {'.png', '.tar.gz', '.jpeg'}:
+    if ext not in {'.png', '.tar.gz', '.jpeg', '.jpg'}:
         return 'File extension not allowed.'
+
+    # if not os.path.exists('/'.join(ROOT_DIR, results_mnt_path, client_ip)):
+    #     os.makedirs('/'.join(ROOT_DIR, results_mnt_path, client_ip))
+
+    filepath = '/'.join((ROOT_DIR, 'results', client_ip))
+    print(filepath)
+
+    pathlib.Path(filepath) \
+        .mkdir(parents=True, exist_ok=True)
+
+    # try:
+    #     os.makedirs('my_folder')
+    # except OSError as e:
+    #     if e.errno != errno.EEXIST:
+    #     raise
     
     # appends upload.filename automatically
     upload.save(
-        destination = results_mnt_path)
+        destination = filepath
     ) 
     return 'OK'
 
