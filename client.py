@@ -1,7 +1,11 @@
-import sys
+import sys, os
 import requests
 
+
 api_url = 'http://localhost:8080/api'
+os.environ['TEST_SUFFIX'] = 'smoke'
+os.environ['WORKLOAD_TYPE'] = 'test'
+
 
 with open(sys.argv[1], 'rb') as f:
     print(
