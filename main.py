@@ -24,6 +24,10 @@ def root():
     }
 
 
+def suffix():
+    return 'smoke'
+
+
 @route('/api', method='POST')
 def upload():
     # get all file keys
@@ -40,25 +44,28 @@ def upload():
     if ext not in {'.png', '.tar.gz', '.jpeg', '.jpg'}:
         return 'File extension not allowed.'
 
-    # if not os.path.exists('/'.join(ROOT_DIR, results_mnt_path, client_ip)):
-    #     os.makedirs('/'.join(ROOT_DIR, results_mnt_path, client_ip))
+    # shell timestamp
+    # $(date '+%Y-%m-%d_%H.%M.%S')
 
-    filepath = '/'.join((ROOT_DIR, 'results', client_ip))
+    filepath = '/'.join((
+        ROOT_DIR, 
+        'results',
+        client_ip,
+        '-'.join((
+            request.environ.get('WORKLOAD_TYPE'),
+            'timestamp', # add timestamp
+            suffix()
+        ))
+    ))
     print(filepath)
 
     pathlib.Path(filepath) \
         .mkdir(parents=True, exist_ok=True)
-
-    # try:
-    #     os.makedirs('my_folder')
-    # except OSError as e:
-    #     if e.errno != errno.EEXIST:
-    #     raise
     
     # appends upload.filename automatically
-    upload.save(
-        destination = filepath
-    ) 
+    # upload.save(
+    #     destination = filepath
+    # ) 
     return 'OK'
 
     
