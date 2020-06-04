@@ -1,5 +1,6 @@
 from bottle import route, run, hook, response, request
 import datetime, os, pathlib
+import pprint
 
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +24,10 @@ def root():
     }
 
 
+def user():
+    return 'mleader'
+
+
 def prefix():
     return 'test'
 
@@ -41,11 +46,11 @@ def upload():
     # request.files.keys()
 
     upload = request.files.get('file')
-    print(upload.filename)
+    # print(upload.filename)
 
     client_ip = request.environ.get('HTTP_X_FORWARDED_FOR') \
         or request.environ.get('REMOTE_ADDR')
-    print(f'request is coming from ip {client_ip}')
+    # print(f'request is coming from ip {client_ip}')
 
     name, ext = os.path.splitext(upload.filename)
     if ext not in {'.png', '.tar.gz', '.jpeg', '.jpg'}:
@@ -54,6 +59,7 @@ def upload():
     filepath = '/'.join((
         ROOT_DIR, 
         'results',
+        # request.environ.get('USER'),
         client_ip,
         '-'.join((
             prefix(),
