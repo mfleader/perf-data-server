@@ -1,6 +1,5 @@
 from bottle import route, run, hook, response, request
-import json
-import os, pathlib
+import datetime, os, pathlib
 
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -24,8 +23,16 @@ def root():
     }
 
 
+def prefix():
+    return 'test'
+
+
 def suffix():
     return 'smoke'
+
+
+def compose_filepath():
+    return ''
 
 
 @route('/api', method='POST')
@@ -44,23 +51,20 @@ def upload():
     if ext not in {'.png', '.tar.gz', '.jpeg', '.jpg'}:
         return 'File extension not allowed.'
 
-    # shell timestamp
-    # $(date '+%Y-%m-%d_%H.%M.%S')
-
     filepath = '/'.join((
         ROOT_DIR, 
         'results',
         client_ip,
         '-'.join((
-            request.environ.get('WORKLOAD_TYPE'),
-            'timestamp', # add timestamp
+            prefix(),
+            datetime.datetime.now().strftime('%Y-%m-%d_%H.%M.%S'),
             suffix()
         ))
     ))
     print(filepath)
 
-    pathlib.Path(filepath) \
-        .mkdir(parents=True, exist_ok=True)
+    # pathlib.Path(filepath) \
+    #     .mkdir(parents=True, exist_ok=True)
     
     # appends upload.filename automatically
     # upload.save(
