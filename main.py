@@ -4,6 +4,10 @@ import datetime, os, pathlib, pprint
 
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+VALID_EXTENSIONS = {
+    '.png', '.jpeg', '.jpg',
+    '.tar.gz', '.tar.xz', '.tar.bz2'
+}
 os.environ['WORKLOAD_TYPE'] = 'devtest'
 os.environ['TRIAL_NAME'] = 't0'
 
@@ -35,8 +39,8 @@ def upload():
         or request.environ.get('REMOTE_ADDR')
     # print(f'request is coming from ip {client_ip}')
 
-    name, ext = os.path.splitext(upload.filename)
-    if ext not in {'.png', '.tar.gz', '.jpeg', '.jpg'}:
+    _, ext = os.path.splitext(upload.filename)
+    if ext not in VALID_EXTENSIONS:
         # return 'File extension not allowed.'
         bottle.abort(400, 'File extennsion not allowed.')
 
@@ -85,4 +89,4 @@ def compose_filepath():
 
     
 if __name__ == '__main__':
-    bottle.run(host='0.0.0.0', port=8080, debug=True)
+    bottle.run(host='0.0.0.0', port=7070, debug=True)
