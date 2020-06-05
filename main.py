@@ -20,14 +20,7 @@ def enable_cors():
 
 
 @bottle.get('/')
-def root():
-    return {
-        'api': 'api/'
-    }
-
-
-def compose_filepath():
-    return ''
+def root(): return {'api': 'api/'}
 
 
 @bottle.post('/api')
@@ -50,9 +43,6 @@ def upload():
     # print(request.forms.get('username'))
     # print(request.forms.get('clustername'))
 
-    print(request.environ.get('WORKLOAD_TYPE'))
-    print(request.environ.get('TRIAL_NAME'))
-
     # can get username and clustername from oc cluster-info
     filepath = '/'.join((
         ROOT_DIR, 
@@ -69,14 +59,14 @@ def upload():
     pathlib.Path(filepath) \
         .mkdir(parents=True, exist_ok=True)
     
-    # # appends upload.filename automatically
+    # appends upload.filename automatically
     upload.save(destination = filepath) 
     return 'OK'
 
 
 def workload_type(request):
     env_var = request.environ.get('WORKLOAD_TYPE')
-    if env_var: # exists
+    if env_var and len(env_var) > 0: # exists
         return env_var
     # else    
     bottle.abort(400, 'Missing environment variable WORKLOAD_TYPE.')
@@ -84,10 +74,14 @@ def workload_type(request):
 
 def trial_name(request):
     env_var = request.environ.get('TRIAL_NAME')
-    if env_var: # exists
+    if env_var and len(env_var) > 0: # exists
         return env_var
     # else    
     bottle.abort(400, 'Missing environment variable TRIAL_NAME.')
+
+
+def compose_filepath():
+    return ''
 
     
 if __name__ == '__main__':
