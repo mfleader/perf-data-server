@@ -24,18 +24,6 @@ def root():
     }
 
 
-def user():
-    return 'mleader'
-
-
-def prefix():
-    return 'test'
-
-
-def suffix():
-    return 'smoke'
-
-
 def compose_filepath():
     return ''
 
@@ -56,11 +44,12 @@ def upload():
     if ext not in {'.png', '.tar.gz', '.jpeg', '.jpg'}:
         return 'File extension not allowed.'
 
-    # can get username and clustername from oc cluster-info
+    
     filepath = '/'.join((
         ROOT_DIR, 
         'results',
-        # request.environ.get('USER'),
+        request.forms.get('username'),
+        request.forms.get('clustername'),
         client_ip,
         '-'.join((
             request.environ.get('WORKLOAD_TYPE'),
