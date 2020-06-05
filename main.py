@@ -56,15 +56,16 @@ def upload():
     if ext not in {'.png', '.tar.gz', '.jpeg', '.jpg'}:
         return 'File extension not allowed.'
 
+    # can get username and clustername from oc cluster-info
     filepath = '/'.join((
         ROOT_DIR, 
         'results',
         # request.environ.get('USER'),
         client_ip,
         '-'.join((
-            prefix(),
+            request.environ.get('WORKLOAD_TYPE'),
             datetime.datetime.now().strftime('%Y-%m-%d_%H.%M.%S'),
-            suffix()
+            request.environ.get('TRIAL_NAME')
         ))
     ))
     print(filepath)
