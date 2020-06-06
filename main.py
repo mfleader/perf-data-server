@@ -2,12 +2,13 @@ import bottle
 from bottle import response, request
 import datetime, os, pathlib, pprint
 
+import mimetypes
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-VALID_EXTENSIONS = {
+VALID_EXTENSIONS = (
     '.png', '.jpeg', '.jpg',
     '.tar.gz', '.tar.xz', '.tar.bz2'
-}
+)
 os.environ['WORKLOAD_TYPE'] = 'devtest'
 os.environ['TRIAL_NAME'] = 't0'
 
@@ -39,10 +40,8 @@ def upload():
         or request.environ.get('REMOTE_ADDR')
     # print(f'request is coming from ip {client_ip}')
 
-    _, ext = os.path.splitext(upload.filename)
-    if ext not in VALID_EXTENSIONS:
-        # return 'File extension not allowed.'
-        bottle.abort(400, 'File extennsion not allowed.')
+    if not upload.filename.endswith(VALID_EXTENSIONS):
+        bottle.abort(400, 'File extension not allowed.')
 
     # print(request.forms.get('username'))
     # print(request.forms.get('clustername'))
