@@ -2,7 +2,7 @@ import sys, os
 import requests
 
 
-api_url = 'http://localhost:8080/api'
+api_url = 'http://localhost:7070/api'
 
 # can get username and clustername from oc cluster-info
 payload = {
