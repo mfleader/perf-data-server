@@ -45,13 +45,7 @@ def upload():
 
     filepath = '/'.join((
         ROOT_DIR, 
-        'results',
-        client_ip,
-        '-'.join((
-            workload_type(request),
-            datetime.datetime.now().strftime('%Y-%m-%d_%H.%M.%S'),
-            trial_name(request)
-        ))
+        'results'
     ))
     print(filepath)
 
@@ -77,10 +71,6 @@ def trial_name(request):
         return env_var
     # else    
     bottle.abort(400, 'Missing environment variable TRIAL_NAME.')
-
-
-def compose_filepath():
-    return ''
 
     
 if __name__ == '__main__':
