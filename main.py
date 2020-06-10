@@ -54,7 +54,7 @@ def upload():
     
     # appends upload.filename automatically
     upload.save(destination = filepath) 
-    return 'OK'
+    return filepath + '\n'
 
 
 def workload_type(request):
