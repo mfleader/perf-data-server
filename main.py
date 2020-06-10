@@ -8,6 +8,8 @@ VALID_EXTENSIONS = (
     '.png', '.jpeg', '.jpg',
     '.tar.gz', '.tar.xz', '.tar.bz2'
 )
+HOST = 'ec2-34-219-195-23.us-west-2.compute.amazonaws.com'
+PORT = 7070
 
 
 @bottle.hook('after_request')
@@ -54,7 +56,7 @@ def upload():
     
     # appends upload.filename automatically
     upload.save(destination = filepath) 
-    return filepath + '\n'
+    return f'{HOST}:{PORT}/results/{upload.filename}\n'
 
 
 def workload_type(request):
@@ -74,4 +76,4 @@ def trial_name(request):
 
     
 if __name__ == '__main__':
-    bottle.run(host='0.0.0.0', port=7070, debug=True)
+    bottle.run(host='0.0.0.0', port=PORT, debug=True)
