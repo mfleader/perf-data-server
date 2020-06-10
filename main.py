@@ -2,15 +2,12 @@ import bottle
 from bottle import response, request
 import datetime, os, pathlib, pprint
 
-import mimetypes
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 VALID_EXTENSIONS = (
     '.png', '.jpeg', '.jpg',
     '.tar.gz', '.tar.xz', '.tar.bz2'
 )
-os.environ['WORKLOAD_TYPE'] = 'devtest'
-os.environ['TRIAL_NAME'] = 't0'
 
 
 @bottle.hook('after_request')
@@ -46,7 +43,6 @@ def upload():
     # print(request.forms.get('username'))
     # print(request.forms.get('clustername'))
 
-    # can get username and clustername from oc cluster-info
     filepath = '/'.join((
         ROOT_DIR, 
         'results',
