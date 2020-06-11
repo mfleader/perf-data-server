@@ -27,6 +27,12 @@ def enable_cors():
 def root(): return {'api': 'api/'}
 
 
+@bottle.get('/results/<filename>')
+def results(filename):
+    return bottle.static_file(filename, root = f'{ROOT_DIR}/results')
+    
+
+
 @bottle.post('/api')
 def upload():
     # get all file keys
