@@ -8,7 +8,7 @@ VALID_EXTENSIONS = (
     '.png', '.jpeg', '.jpg',
     '.tar.gz', '.tar.xz', '.tar.bz2'
 )
-HOST = 'ec2-34-219-195-23.us-west-2.compute.amazonaws.com'
+HOST = 'http://ec2-34-219-195-23.us-west-2.compute.amazonaws.com'
 PORT = 7070
 
 
