@@ -8,7 +8,7 @@ ENV PATH /root/.local/bin:$PATH \
     LANG 'en_US.UTF-8'
 
 RUN dnf install -y python36 \
-    ln -s /usr/bin/python3 /usr/bin/python \
+    && ln -s /usr/bin/python3 /usr/bin/python \
     && ln -s /usr/bin/pip3 /usr/bin/pip \
     && dnf clean all \
     && pip install pipenv
