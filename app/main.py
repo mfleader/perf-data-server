@@ -48,9 +48,6 @@ def upload():
     if not upload.filename.endswith(VALID_EXTENSIONS):
         bottle.abort(400, 'File extension not allowed.')
 
-    # print(request.forms.get('username'))
-    # print(request.forms.get('clustername'))
-
     filepath = '/'.join((
         ROOT_DIR, 
         'results'
@@ -65,21 +62,6 @@ def upload():
     return f'{HOST}:{PORT}/results/{upload.filename}\n'
 
 
-def workload_type(request):
-    env_var = request.environ.get('WORKLOAD_TYPE')
-    if env_var and len(env_var) > 0: # exists
-        return env_var
-    # else    
-    bottle.abort(400, 'Missing environment variable WORKLOAD_TYPE.')
-
-
-def trial_name(request):
-    env_var = request.environ.get('TRIAL_NAME')
-    if env_var and len(env_var) > 0: # exists
-        return env_var
-    # else    
-    bottle.abort(400, 'Missing environment variable TRIAL_NAME.')
-
-    
+  
 if __name__ == '__main__':
     bottle.run(host='0.0.0.0', port=PORT, debug=True)

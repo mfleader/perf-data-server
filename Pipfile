@@ -4,11 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+watchdog = "*"
 
 [packages]
-bottle = "*"
-watchdog = "*"
-argh = "*"
+argh = "==0.26.2"
+bottle = "==0.12.18"
+pathtools = "==0.1.2"
 
 [requires]
 python_version = "3.6"
