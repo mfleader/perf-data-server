@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.2
+FROM centos:8.2.2004
 
 LABEL maintainer="Matthew F Leader <mleader@redhat.com>"
 
