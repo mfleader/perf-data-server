@@ -6,8 +6,7 @@ ENV PATH /root/.local/bin:$PATH \
     PIP_NO_CACHE_DIR off \
     APP_ROOT /data_server
 
-RUN dnf install -y python38 \
-    && ln -s /usr/bin/python3 /usr/bin/python \
+RUN ln -s /usr/bin/python3 /usr/bin/python \
     && ln -s /usr/bin/pip3 /usr/bin/pip \
     && dnf clean all \
     && pip install pipenv
