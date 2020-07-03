@@ -4,9 +4,11 @@ LABEL maintainer="Matthew F Leader <mleader@redhat.com>"
 
 ENV PATH /root/.local/bin:$PATH \
     PIP_NO_CACHE_DIR off \
-    APP_ROOT /data_server
+    APP_ROOT /data_server \
+    LANG 'en_US.UTF-8'
 
-RUN ln -s /usr/bin/python3 /usr/bin/python \
+RUN dnf install -y python36 \
+    ln -s /usr/bin/python3 /usr/bin/python \
     && ln -s /usr/bin/pip3 /usr/bin/pip \
     && dnf clean all \
     && pip install pipenv
