@@ -1,11 +1,10 @@
-FROM centos:8.2.2004
+FROM docker.io/library/centos:8.2.2004
 
 LABEL maintainer="Matthew F Leader <mleader@redhat.com>"
 
 ENV PATH /root/.local/bin:$PATH \
     PIP_NO_CACHE_DIR off \
-    APP_ROOT /data_server \
-    LANG 'en_US.UTF-8'
+    APP_ROOT /data_server 
 
 RUN dnf install -y python36 \
     && ln -s /usr/bin/python3 /usr/bin/python \
