@@ -24,7 +24,9 @@ def enable_cors():
 
 
 @bottle.get('/')
-def root(): return {'api': 'api/'}
+def root(): 
+    # return {'api': 'api/'}
+    return 'The root! the root! The root is on fire!!!! Try api/.'
 
 
 @bottle.get('/results/<filename>')
